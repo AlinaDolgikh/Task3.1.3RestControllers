@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>All users</title>
+</head>
+<body>
+<h2>All Users</h2>
+<table>
+    <style>
+        table th, table td {padding: 5px;}
+        .operations-cell {text-align: center;}
+        .form-inline {display: inline;}
+    </style>
+    <tr>
+        <th>Username</th>
+        <th>Surname</th>
+        <th>Salary</th>
+        <th>Role</th>
+        <th class="operations-cell">Operations</th>
+    </tr>
+    <tr>
+        <th colspan="4"></th>
+    </tr>
+    <div th:each="user : ${users}">
+        <tr>
+            <td><span th:text="${user.username}"></span></td>
+            <td><span th:text="${user.surname}"></span></td>
+            <td><span th:text="${user.salary}"></span></td>
+            <td><span th:text="${user.roles}"></span></td>
+            <td class="operations-cell">
+                <form th:action="@{'/admin/updateInfo/'+${user.id}}" class="form-inline">
+                    <input type="submit" value="Update">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                </form>
+                <form th:action="@{'/admin/delete/'+${user.id}}" method="post" class="form-inline">
+                    <input type="submit" value="Delete">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                </form>
+            </td>
+
+        </tr>
+    </div>
+</table>
+<input type="submit" value="Add user" onclick="window.location.href = 'addNewUser'"/>
+
+<br><br>
+
+
+</form>
+<form th:action="@{/user/}" method="get" class="form-inline">
+    <input type="submit" value="Personal account">
+
+</form>
+
+<br><br>
+
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout"/>
+
+</body>
+</html>
